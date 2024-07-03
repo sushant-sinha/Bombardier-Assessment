@@ -13,5 +13,18 @@ data = data.drop(columns=['first_name', 'lastName', 'Email', 'Address'])
 glucose_columns = ['glucose_mg/dl_t1', 'glucose_mg/dl_t2', 'glucose_mg/dl_t3']
 data[glucose_columns] = data[glucose_columns].apply(pd.to_numeric, errors='coerce')
 
-# Replace 'inf' values with NaN
+# Replacing 'inf' values with NaN
 data.replace([np.inf, -np.inf], np.nan, inplace=True)
+
+# Handling outliers using IQR
+def calculate_mean_excluding_outliers(series):
+    Q1 = series.quantile(0.25)
+    Q3 = series.quantile(0.75)
+    IQR = Q3 - Q1
+    # Determine boundary values for non-outliers
+    lower_bound = Q1 - 1.5 * IQR
+    upper_bound = Q3 + 1.5 * IQR
+    # Filter out outliers and then calculate mean
+    filtered_series = series[(series >= lower_bound) & (series <= upper_bound)]
+    return filtered_series.mean()
+
