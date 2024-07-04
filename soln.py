@@ -83,3 +83,16 @@ data['diabetes_diagnosis'] = data['average_glucose'].apply(diagnose_diabetes)
 # Storing the diagnosis in a CSV file (preferred because the input data was in CSV format)
 output_file_path = 'diabetes_diagnosis_data.csv'
 data.to_csv(output_file_path, index=False)
+
+# Blow are the helper functions created for assisting the test cases present in test.py file
+
+# Fills the missing blood sugar values by using the `calculate_mean_excluding_outliers`
+def fill_missing_values(df):
+    glucose_columns = ['glucose_mg/dl_t1', 'glucose_mg/dl_t2', 'glucose_mg/dl_t3']
+    df[glucose_columns] = df[glucose_columns].apply(pd.to_numeric, errors='coerce')
+    df.replace([np.inf, -np.inf], np.nan, inplace=True)
+    for col in glucose_columns:
+        mean_value = calculate_mean_excluding_outliers(df[col])
+        df[col].fillna(mean_value, inplace=True)
+        df[col] = df[col].apply(lambda x: mean_value if x < 0 else x)
+    return df
