@@ -96,3 +96,15 @@ def fill_missing_values(df):
         df[col].fillna(mean_value, inplace=True)
         df[col] = df[col].apply(lambda x: mean_value if x < 0 else x)
     return df
+
+# Calculates the average value of all three blood sugar values
+def calculate_average_glucose(df):
+    df=fill_missing_values(df)
+    glucose_columns = ['glucose_mg/dl_t1', 'glucose_mg/dl_t2', 'glucose_mg/dl_t3']
+    df['average_glucose'] = df[glucose_columns].mean(axis=1)
+    return df
+
+def normalize_data(df):
+    df['cancerPresent'] = df['cancerPresent'].astype(bool)
+    df['atrophy_present'] = df['atrophy_present'].astype(int)
+    return df
