@@ -34,3 +34,10 @@ for col in glucose_columns:
     data[col].fillna(mean_value, inplace=True)
     data[col] = data[col].apply(lambda x: mean_value if x < 0 else x)
 
+def diagnose_diabetes(avg_glucose):
+    if avg_glucose < 140:
+        return 'normal'
+    elif 140 <= avg_glucose <= 199:
+        return 'prediabetes'
+    else:
+        return 'diabetes'
