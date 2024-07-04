@@ -1,9 +1,9 @@
 import unittest
 import pandas as pd
 import numpy as np
-from soln import fill_missing_values, calculate_average_glucose, diagnose_diabetes, normalize_data, calculate_mean_excluding_outliers
+from diabetesDiagnosis import fill_missing_values, calculate_average_glucose, diagnose_diabetes, normalize_data, calculate_mean_excluding_outliers
 
-class testDiabetesDiagnosisSteps(unittest.TestCase):
+class testDiabetesDiagnosis(unittest.TestCase):
 
     # Sample data for testing
     def setUp(self):
