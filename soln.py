@@ -56,3 +56,11 @@ def diagnose_diabetes(avg_glucose):
         return 'prediabetes'
     else:
         return 'diabetes'
+
+# Creating a new column for diagnosis: `diabetes_diagnosis` and applying the results
+data['diabetes_diagnosis'] = data['average_glucose'].apply(diagnose_diabetes)
+
+# Step 6: Store data to a CSV file
+# Storing the diagnosis in a CSV file (preferred because the input data was in CSV format)
+output_file_path = 'diabetes_diagnosis_data.csv'
+data.to_csv(output_file_path, index=False)
