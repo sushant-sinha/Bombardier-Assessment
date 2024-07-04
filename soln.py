@@ -34,6 +34,21 @@ for col in glucose_columns:
     data[col].fillna(mean_value, inplace=True)
     data[col] = data[col].apply(lambda x: mean_value if x < 0 else x)
 
+# The below piece of code might not be needed if we are guaranteed that `cancerPresent` and `atrophy_present` are always present
+# Fill missing values for 'cancerPresent' and 'atrophy_present'
+data['cancerPresent'] = data['cancerPresent'].fillna('False').astype(bool)
+data['atrophy_present'] = data['atrophy_present'].fillna(0).astype(int)
+
+# Step 3: Normalize Data
+# Ensuring 'cancerPresent' is boolean and 'atrophy_present' is integer
+data['cancerPresent'] = data['cancerPresent'].astype(bool)
+data['atrophy_present'] = data['atrophy_present'].astype(int)
+
+# Step 4: Add a column for average glucose levels
+# Adding a new column for `average_glucose`
+data['average_glucose'] = data[glucose_columns].mean(axis=1)
+
+# Step 5: Add a column for diabetes diagnosis
 def diagnose_diabetes(avg_glucose):
     if avg_glucose < 140:
         return 'normal'
