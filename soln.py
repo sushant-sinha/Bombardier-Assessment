@@ -1,3 +1,22 @@
+'''
+
+Take home assessment for Cloud Operations Team Internship(Fall 2024) at Bombardier
+
+Prepared by: Sushant Sinha(sinhasushant04@gmail.com)
+Submitted to : Mamaleshwar Kovi Gowri Kumar(Mamaleshwar.kg@aero.bombardier.com)
+
+Below are the CRITICAL assumptions made while creating the 
+
+    1)Data Imputation: for the missing values in the glucose readings, we're replacing the values with the average of the entire column. This route was chosen because we cannot delete that patient's entire row. We need to give a result to the patient.
+    
+    Else, we could have given a message `incomplete data` in the diabetes_diagnostic column for that patient.
+
+    2) Handling outliers(for patient_id:705): considering the glucose_mg/dl_t2 value for calculating the mean will affect all the data of all the patients which have a missing glucose_mg/dl_t2(because we are using the data imputation). To tackle this, we will ignore these values(outliers) while calculating the mean.
+
+    3) cancerPresent and atrophy_Present have no effect on our diagnosis. It is just for user's reference.
+
+'''
+
 import pandas as pd
 import numpy as np
 
