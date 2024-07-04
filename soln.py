@@ -28,3 +28,9 @@ def calculate_mean_excluding_outliers(series):
     filtered_series = series[(series >= lower_bound) & (series <= upper_bound)]
     return filtered_series.mean()
 
+# Filling the missing blood sugar values with the mean of the column , excluding outliers
+for col in glucose_columns:
+    mean_value = calculate_mean_excluding_outliers(data[col])
+    data[col].fillna(mean_value, inplace=True)
+    data[col] = data[col].apply(lambda x: mean_value if x < 0 else x)
+
